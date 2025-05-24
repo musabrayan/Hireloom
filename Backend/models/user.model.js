@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    phoneNumber: {
+    mobileNumber: {
         type: Number,
         required: true,
         unique: true
@@ -19,25 +19,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    role: {
+    userRole: {
         type: String,
         enum: ['student', 'recruiter'],
         required: true
     },
-    profile: {
+    profileDetails: {
         bio: {
             type: String
         },
         skills: [{ type: String }],
-        resume: { type: String },
-        resumeOriginalName: { type: String },
-        company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
-        profilePhoto:{
-            type:String,
-            default:""
+        resumeUrl: { type: String },
+        resumeFilename: { type: String },
+        currentCompany: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
+        profileImageUrl: {
+            type: String,
+            default: ""
         }
     }
-},{timestamps:true})
-
+}, { timestamps: true });
 
 export const User = mongoose.model("User", userSchema);
