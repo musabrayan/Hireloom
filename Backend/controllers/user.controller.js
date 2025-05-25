@@ -156,24 +156,16 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { fullName, email, mobileNumber, bio, skills } = req.body;
-        const file =  req.file;
+        const file = req.file; // For profile photo or resume (if using multer)
 
-        // Validate required fields
-        if (!fullName || !email || !mobileNumber || !bio || !skills) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields are required."
-            });
-        }
+        // TODO: Cloudinary implementation for uploading file if needed
 
-        //TODO: cloudinary implmentation
-
-        // Convert skills string to array
+        // Convert comma-separated skills string to an array
         const skillsArray = typeof skills === "string"
             ? skills.split(",").map(skill => skill.trim())
             : skills;
 
-        const userId = req.id; // userId from auth middleware
+        const userId = req.userId; // Comes from isAuthenticated middleware
 
         const user = await User.findById(userId);
         if (!user) {
@@ -183,18 +175,20 @@ export const updateProfile = async (req, res) => {
             });
         }
 
-        // Update user fields
-        user.fullName = fullName;
-        user.email = email;
-        user.mobileNumber = mobileNumber;
+        // Update user details if provided
+        if (fullName) user.fullName = fullName;
+        if (email) user.email = email;
+        if (mobileNumber) user.mobileNumber = mobileNumber;
 
+        // Ensure profileDetails object exists
         if (!user.profileDetails) user.profileDetails = {};
 
-        user.profileDetails.bio = bio;
-        user.profileDetails.skills = skillsArray;
+        if (bio) user.profileDetails.bio = bio;
+        if (skills) user.profileDetails.skills = skillsArray;
+
+        // Optionally handle file upload (e.g., profile photo)
 
         await user.save();
-    
 
         return res.status(200).json({
             success: true,
