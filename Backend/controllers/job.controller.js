@@ -1,6 +1,6 @@
 import { Job } from "../models/job.model.js";
 
-export const postJob = async (req, res) => {
+export const createJob = async (req, res) => {
     try {
         const {
             jobTitle,
@@ -10,10 +10,11 @@ export const postJob = async (req, res) => {
             jobLocation,
             employmentType,
             companyId,
+            openPositions,
             minExperience
         } = req.body;
 
-        const userId = req.userId; // from authentication middleware
+        const userId = req.userId; // from auth middleware
 
         // Validate all required fields
         if (
@@ -24,6 +25,7 @@ export const postJob = async (req, res) => {
             !jobLocation || 
             !employmentType || 
             !companyId || 
+            !openPositions ||
             !minExperience
         ) {
             return res.status(400).json({
@@ -32,7 +34,7 @@ export const postJob = async (req, res) => {
             });
         }
 
-        // Create job
+        // Create new job
         const job = await Job.create({
             jobTitle,
             jobDescription,
@@ -41,8 +43,9 @@ export const postJob = async (req, res) => {
             jobLocation,
             employmentType,
             companyId,
-            minExperience,
-            createdBy: userId
+            minExperience: Number(minExperience),
+            openPositions: Number(openPositions),
+            createdBy: userId  // changed from postedBy to createdBy for consistency
         });
 
         return res.status(201).json({
@@ -52,10 +55,101 @@ export const postJob = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error posting job:", error.message);
+        console.error("Error creating job:", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error.",
+            error: error.message
+        });
+    }
+};
+
+export const getJobs = async (req, res) => {
+    try {
+        const keyword = req.query.keyword || "";
+        const searchQuery = {
+            $or: [
+                { jobTitle: { $regex: keyword, $options: "i" } },
+                { jobDescription: { $regex: keyword, $options: "i" } }
+            ]
+        };
+
+        const jobs = await Job.find(searchQuery)
+                              .populate("companyId")
+                              .sort({ createdAt: -1 });
+
+        if (!jobs || jobs.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No jobs found."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            jobs
+        });
+
+    } catch (error) {
+        console.error("Error fetching jobs:", error.message);
         return res.status(500).json({
             success: false,
             message: "Internal server error."
+        });
+    }
+};
+
+export const getJobById = async (req, res) => {
+    try {
+        const jobId = req.params.id;
+        const job = await Job.findById(jobId).populate("companyId");
+
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: "Job not found."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            job
+        });
+
+    } catch (error) {
+        console.error("Error fetching job by ID:", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error."
+        });
+    }
+};
+
+export const JobsCreatedByAdmin = async (req, res) => {
+    try {
+        console.log(req.userId);
+        
+        const adminId = req.userId;  
+        const jobs = await Job.find({ postedBy: adminId }).populate("companyId").sort({ createdAt: -1 });
+
+        if (!jobs || jobs.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No jobs found for this user."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            jobs
+        });
+
+    } catch (error) {
+        console.error("Error fetching jobs by user:", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error.",
+            error: error.message
         });
     }
 };
