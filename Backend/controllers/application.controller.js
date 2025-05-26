@@ -61,7 +61,6 @@ export const applyToJob = async (req, res) => {
     }
 };
 
-import { Application } from "../models/application.model.js";
 
 export const getUserAppliedJobs = async (req, res) => {
     try {
@@ -95,6 +94,87 @@ export const getUserAppliedJobs = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Internal server error.",
+            error: error.message
+        });
+    }
+};
+
+
+export const getJobApplicants = async (req, res) => {
+    try {
+        const jobId = req.params.id;
+
+        // Find the job and populate applications with applicant details
+        const job = await Job.findById(jobId).populate({
+            path: "applications",
+            options: { sort: { createdAt: -1 } },
+            populate: {
+                path: "applicantId"
+            }
+        });
+
+        if (!job) {
+            return res.status(404).json({
+                success: false,
+                message: "Job not found"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Applicants fetched successfully.",
+            job
+        });
+
+    } catch (error) {
+        console.error("Error fetching applicants:", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error.",
+            error: error.message
+        });
+    }
+};
+
+export const updateApplicationStatus = async (req, res) => {
+    try {
+        const { applicationStatus } = req.body;
+        
+        
+        const applicationId = req.params.id;
+
+        // Validate input
+        if (!applicationStatus) {
+            return res.status(400).json({
+                success: false,
+                message: "Application status is required"
+            });
+        }
+
+        // Find application
+        const application = await Application.findById(applicationId);
+        if (!application) {
+            return res.status(404).json({
+                success: false,
+                message: "Application not found"
+            });
+        }
+
+        // Update and save
+        application.applicationStatus = applicationStatus.toLowerCase();
+        await application.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Application status updated successfully",
+            updatedStatus: application.applicationStatus
+        });
+
+    } catch (error) {
+        console.error("Status update error:", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
             error: error.message
         });
     }
