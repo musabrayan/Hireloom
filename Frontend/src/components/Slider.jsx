@@ -13,7 +13,7 @@ const category = [
 const Slider = () => {
     return (
         <div className="w-full py-8 md:py-12 lg:py-16">
-            {/* Header Section */}
+      
             <div className="text-center mb-6 md:mb-8 lg:mb-12 px-4">
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4">
                     Browse Categories
@@ -23,7 +23,7 @@ const Slider = () => {
                 </p>
             </div>
 
-            {/* Carousel */}
+          
             <Carousel className="w-full max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-5xl mx-auto px-8 md:px-12 lg:px-16">
                 <CarouselContent className="-ml-2 md:-ml-4">
                     {category.map((cat, index) => (
@@ -38,7 +38,7 @@ const Slider = () => {
                     ))}
                 </CarouselContent>
                 
-                {/* Navigation Buttons - Hidden on mobile, visible on desktop */}
+                
                 <CarouselPrevious className="hidden md:flex -left-6 lg:-left-8 w-10 md:h-10 lg:w-12 lg:h-12" />
                 <CarouselNext className="hidden md:flex -right-6 lg:-right-8 w-10 md:h-10 lg:w-12 lg:h-12" />
             </Carousel>

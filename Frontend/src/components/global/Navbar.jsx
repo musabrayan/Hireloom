@@ -25,7 +25,7 @@ const Navbar = () => {
                 </h1>
 
                 <div className="flex items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
-                    {/* Mobile Hamburger Menu */}
+                  
                     <Button
                         variant="ghost"
                         size="sm"
@@ -35,7 +35,7 @@ const Navbar = () => {
                         {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                     </Button>
 
-                    {/* Desktop Navigation */}
+                  
                     <ul className="hidden sm:flex items-center gap-3 sm:gap-4 md:gap-6 text-muted-foreground font-medium">
                         <li className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base">
                             Home
@@ -78,7 +78,7 @@ const Navbar = () => {
                             </PopoverTrigger>
 
                             <PopoverContent className="w-56 sm:w-64 p-3 sm:p-4 space-y-3 sm:space-y-4 bg-popover text-popover-foreground border border-border shadow-md">
-                                {/* User Info */}
+                               
                                 <div className="flex items-center gap-2 sm:gap-3">
                                     <Avatar className="w-8 h-8 sm:w-10 sm:h-10">
                                         <AvatarImage src="https://github.com/shadcn.png" alt="user" />
@@ -92,7 +92,7 @@ const Navbar = () => {
                                     </div>
                                 </div>
 
-                                {/* Actions */}
+                               
                                 <div className="border-t border-border pt-2 space-y-1">
                                     <Button
                                         variant="ghost"
@@ -115,7 +115,7 @@ const Navbar = () => {
                 </div>
             </div>
             
-            {/* Mobile Navigation Menu */}
+            
             {isMobileMenuOpen && (
                 <div className="sm:hidden bg-background border-t border-border">
                     <div className="px-3 py-4 space-y-3">
@@ -149,7 +149,7 @@ const Navbar = () => {
                             </li>
                         </ul>
                         
-                        {/* Mobile Auth Buttons */}
+                     
                         {!user && (
                             <div className="flex flex-col gap-3 pt-3 border-t border-border">
                                 <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
