@@ -45,7 +45,7 @@ export const createJob = async (req, res) => {
             companyId,
             minExperience: Number(minExperience),
             openPositions: Number(openPositions),
-            createdBy: userId  // changed from postedBy to createdBy for consistency
+            createdBy: userId  
         });
 
         return res.status(201).json({
