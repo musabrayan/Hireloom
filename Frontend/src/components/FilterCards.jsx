@@ -43,13 +43,13 @@ const FilterCards = () => {
   }
 
   return (
-    <div className="w-full bg-white p-3 rounded-md">
-
-      <div className="flex items-center justify-between">
-        <h1 className="font-bold text-lg">Filter Jobs</h1>
+    <div className="w-full bg-card text-card-foreground p-4 rounded-2xl shadow border border-border">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-lg font-semibold">Filter Jobs</h2>
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="lg:hidden flex items-center justify-center p-1 hover:bg-gray-100 rounded-md transition-colors"
+          className="lg:hidden flex items-center justify-center p-1 hover:bg-accent rounded-md transition-colors"
           aria-label="Toggle filters"
         >
           {isCollapsed ? (
@@ -60,23 +60,25 @@ const FilterCards = () => {
         </button>
       </div>
 
-      <hr className="mt-3" />
+      <hr className="border-border mb-4" />
 
-
+      {/* Filter Options */}
       <div className={`${isCollapsed ? 'hidden lg:block' : 'block'}`}>
-        <RadioGroup value={selectedValue} onValueChange={changeHandler}>
-          {filterData.map((data, index) => (
-            <div key={index} className="mt-4">
-              <h1 className="font-bold text-lg">{data.filterType}</h1>
-              {data.array.map((item, idx) => {
-                const itemId = `id${index}-${idx}`
-                return (
-                  <div className="flex items-center space-x-2 my-2" key={idx}>
-                    <RadioGroupItem value={item} id={itemId} />
-                    <Label htmlFor={itemId}>{item}</Label>
-                  </div>
-                )
-              })}
+        <RadioGroup value={selectedValue} onValueChange={changeHandler} className="space-y-6">
+          {filterData.map((section, index) => (
+            <div key={index} className="space-y-2">
+              <h3 className="text-sm font-medium text-muted-foreground">{section.filterType}</h3>
+              <div className="space-y-2">
+                {section.array.map((item, idx) => {
+                  const itemId = `id${index}-${idx}`
+                  return (
+                    <div className="flex items-center space-x-2" key={idx}>
+                      <RadioGroupItem value={item} id={itemId} />
+                      <Label htmlFor={itemId} className="text-sm">{item}</Label>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           ))}
         </RadioGroup>
