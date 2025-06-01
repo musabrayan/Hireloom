@@ -37,14 +37,16 @@ const Navbar = () => {
 
                   
                     <ul className="hidden sm:flex items-center gap-3 sm:gap-4 md:gap-6 text-muted-foreground font-medium">
-                        <li className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base">
-                            Home
+                        <li className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"><Link to="/">
+                            Home</Link> 
                         </li>
                         <li className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base">
-                            Jobs
+                            <Link to="/jobs">
+                            Jobs</Link> 
                         </li>
                         <li className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base">
-                            Browse
+                            <Link to="/browse">
+                            Browse</Link> 
                         </li>
                     </ul>
 
