@@ -26,7 +26,6 @@ const JobCard = () => {
         </div>
       </div>
 
- \
       <div className="mb-4">
         <h3 className="font-bold text-lg text-primary">Frontend Developer</h3>
         <p className="text-sm text-muted-foreground line-clamp-2">

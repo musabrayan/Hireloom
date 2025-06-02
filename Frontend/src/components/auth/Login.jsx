@@ -12,7 +12,7 @@ import { Button } from '../ui/button';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
 import { USER_API_END_POINT } from '../../utils/constant';
-import { setLoading } from '@/redux/authSlice';
+import { setLoading, setUser } from '@/redux/authSlice';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -43,6 +43,7 @@ const Login = () => {
       });
 
       if (response.data.success) {
+        dispatch(setUser(response.data.user))
         toast.success(response.data.message);
         navigate('/');
       }

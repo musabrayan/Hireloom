@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User2, LogOut, Menu, X } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-    const user = false;
+   
+    const {user} = useSelector(store=> store.auth)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
@@ -99,9 +101,9 @@ const Navbar = () => {
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        className="w-full justify-start gap-2 hover:bg-muted transition-colors text-xs sm:text-sm h-8 sm:h-9"
+                                        className="w-full justify-start gap-2 hover:bg-muted transition-colors text-xs sm:text-sm h-8 sm:h-9 cursor-pointer"
                                     >
-                                        <User2 size={14} className="sm:w-4 sm:h-4" /> View Profile
+                                        <User2 size={14} className="sm:w-4 sm:h-4" /> <Link to='user-profile'> View Profile</Link>
                                     </Button>
                                     <Button
                                         variant="ghost"
