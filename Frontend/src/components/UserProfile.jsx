@@ -16,8 +16,8 @@ const UserProfile = () => {
     <div>
       <Navbar />
 
-      <div className="max-w-7xl mx-auto my-6 p-6 sm:p-8 bg-background border border-border rounded-2xl shadow-sm">
-        {/* Profile Header */}
+      <div className="max-w-5xl mx-auto my-6 p-6 sm:p-8 bg-background border border-border rounded-2xl shadow-sm">
+        
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6">
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
@@ -38,7 +38,7 @@ const UserProfile = () => {
           </Button>
         </div>
 
-        {/* Contact Info */}
+       
         <div className="mt-6 space-y-2 text-sm sm:text-base">
           <div className="flex items-center gap-3">
             <Mail className="h-5 w-5 text-muted-foreground" />
@@ -50,7 +50,7 @@ const UserProfile = () => {
           </div>
         </div>
 
-        {/* Skills Section */}
+       
         <div className="mt-6">
           <h3 className="font-semibold text-lg mb-2">Skills</h3>
           <div className="flex flex-wrap gap-2">
@@ -84,11 +84,13 @@ const UserProfile = () => {
         </div>
 
        
-        <div className="mt-8">
+       
+      </div>
+
+       <div className="mx-auto max-w-5xl">
           <h3 className="font-semibold text-lg mb-2">Applied Jobs</h3>
           <MyJobApplications />
         </div>
-      </div>
     </div>
   );
 };

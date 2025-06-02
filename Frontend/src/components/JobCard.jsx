@@ -5,6 +5,8 @@ import { Avatar, AvatarImage } from './ui/avatar'
 import { Badge } from './ui/badge'
 
 const JobCard = () => {
+
+
   return (
     <div className="bg-card text-card-foreground p-5 rounded-2xl shadow border border-border transition hover:shadow-lg">
    
