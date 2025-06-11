@@ -3,9 +3,12 @@ import { Button } from './ui/button'
 import { Bookmark } from 'lucide-react'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Badge } from './ui/badge'
+import { useNavigate } from 'react-router-dom'
 
 const JobCard = () => {
-
+  
+  const navigate = useNavigate()
+  const jobId = 'kejikdeiodewnio'
 
   return (
     <div className="bg-card text-card-foreground p-5 rounded-2xl shadow border border-border transition hover:shadow-lg">
@@ -44,7 +47,7 @@ const JobCard = () => {
 
    
       <div className="flex items-center gap-3">
-        <Button variant="secondary">Details</Button>
+        <Button className='cursor-pointer' onClick={()=> navigate(`/job-description/${jobId}`)} variant="secondary">Details</Button>
         <Button className="bg-primary text-primary-foreground hover:bg-primary/90">Save for Later</Button>
       </div>
     </div>
