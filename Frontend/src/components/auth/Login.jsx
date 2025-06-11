@@ -11,7 +11,7 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
-import { USER_API_END_POINT } from '../../utils/constant';
+import { USER_API_BASE_URL } from '../../utils/constant';
 import { setLoading, setUser } from '@/redux/authSlice';
 
 const Login = () => {
@@ -37,7 +37,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(setLoading(true));
     try {
-      const response = await axios.post(`${USER_API_END_POINT}/login`, formData, {
+      const response = await axios.post(`${USER_API_BASE_URL}/login`, formData, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });

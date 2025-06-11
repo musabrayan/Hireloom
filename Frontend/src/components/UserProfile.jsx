@@ -29,7 +29,7 @@ const UserProfile = () => {
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src="https://imgs.search.brave.com/hoof-A79UqpE4cGRslutlU9zqOAoCwEI4sfy5cdG--c/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/YWJzdHJhY3QtY29t/cGFueS1sb2dvXzUz/ODc2LTEyMDUwMS5q/cGc_c2VtdD1haXNf/aHlicmlkJnc9NzQw"
+                src={user?.profileDetails.profileImageUrl}
                 alt="User Avatar"
               />
             </Avatar>

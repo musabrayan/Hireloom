@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'sonner'
 import { setUser } from '../redux/authSlice';
-import {USER_API_END_POINT} from "../utils/constant"
+import {USER_API_BASE_URL} from "../utils/constant"
 
 
 const UpdateProfile = ({ open, setOpen }) => {
@@ -55,7 +55,7 @@ const UpdateProfile = ({ open, setOpen }) => {
 
         try {
             setLoading(true);
-            const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData, {
+            const res = await axios.post(`${USER_API_BASE_URL}/profile/update`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
             });

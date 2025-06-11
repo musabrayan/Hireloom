@@ -10,7 +10,7 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { USER_API_END_POINT } from '../../utils/constant';
+import { USER_API_BASE_URL } from '../../utils/constant';
 import { setLoading } from '@/redux/authSlice';
 
 const Signup = () => {
@@ -51,7 +51,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post(`${USER_API_END_POINT}/register`, data, {
+      const response = await axios.post(`${USER_API_BASE_URL}/register`, data, {
         headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true
       });

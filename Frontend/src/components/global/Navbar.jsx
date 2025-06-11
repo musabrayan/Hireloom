@@ -1,23 +1,48 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover";
+} from "../ui/popover";
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-} from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+} from "../ui/avatar";
+import { Button } from "../ui/button";
 import { User2, LogOut, Menu, X } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_BASE_URL } from "@/utils/constant";
+import { setUser } from '@/redux/authSlice';
 
 const Navbar = () => {
    
     const {user} = useSelector(store=> store.auth)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const logOutHandler = async () => {
+    try {
+        const res = await axios.get(`${USER_API_BASE_URL}/logout`, {
+            withCredentials: true
+        });
+
+        if (res.data?.success) {
+            dispatch(setUser(null));
+            navigate("/");
+            toast.success(res.data.message || "Logged out successfully");
+        }
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "Logout failed. Please try again.";
+        toast.error(message);
+        console.error("Logout Error:", error); 
+    }
+};
+
 
     return (
         <div className="bg-background border-b border-border">
@@ -76,7 +101,7 @@ const Navbar = () => {
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Avatar className="cursor-pointer w-8 h-8 sm:w-10 sm:h-10">
-                                    <AvatarImage src="https://github.com/shadcn.png" alt="user" />
+                                    <AvatarImage src={user?.profileDetails.profileImageUrl} alt="user" />
                                     <AvatarFallback className="text-xs sm:text-sm">HR</AvatarFallback>
                                 </Avatar>
                             </PopoverTrigger>
@@ -85,13 +110,13 @@ const Navbar = () => {
                                
                                 <div className="flex items-center gap-2 sm:gap-3">
                                     <Avatar className="w-8 h-8 sm:w-10 sm:h-10">
-                                        <AvatarImage src="https://github.com/shadcn.png" alt="user" />
+                                        <AvatarImage src={user?.profileDetails.profileImageUrl} alt="user" />
                                         <AvatarFallback className="text-xs sm:text-sm">HR</AvatarFallback>
                                     </Avatar>
                                     <div>
-                                        <h4 className="text-xs sm:text-sm font-medium">Musab Rayan</h4>
+                                        <h4 className="text-xs sm:text-sm font-medium">{user?.fullName}</h4>
                                         <p className="text-xs text-muted-foreground">
-                                            musab@example.com
+                                            {user?.email}
                                         </p>
                                     </div>
                                 </div>
@@ -103,11 +128,12 @@ const Navbar = () => {
                                         size="sm"
                                         className="w-full justify-start gap-2 hover:bg-muted transition-colors text-xs sm:text-sm h-8 sm:h-9 cursor-pointer"
                                     >
-                                        <User2 size={14} className="sm:w-4 sm:h-4" /> <Link to='user-profile'> View Profile</Link>
+                                        <User2 size={14} className="sm:w-4 sm:h-4" /> <Link to='/user-profile'> View Profile</Link>
                                     </Button>
                                     <Button
                                         variant="ghost"
                                         size="sm"
+                                        onClick={logOutHandler}
                                         className="w-full justify-start gap-2 text-destructive hover:bg-destructive-foreground/10 transition-colors text-xs sm:text-sm h-8 sm:h-9"
                                     >
                                         <LogOut size={14} className="sm:w-4 sm:h-4" /> Logout

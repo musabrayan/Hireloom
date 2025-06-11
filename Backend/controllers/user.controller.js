@@ -16,6 +16,14 @@ export const register = async (req, res) => {
             });
         }
 
+        const file = req.file
+        const fileURI = convertFileToDataUri(file)
+
+        const cloudinaryResponse = await cloudinary.uploader.upload(fileURI.content, {
+            resource_type: "auto"
+        });
+        
+
         // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -34,7 +42,10 @@ export const register = async (req, res) => {
             email,
             mobileNumber,
             password: hashedPassword,
-            userRole
+            userRole,
+            profileDetails:{
+               profileImageUrl: cloudinaryResponse.secure_url
+            }
         });
 
         return res.status(201).json({
@@ -169,7 +180,7 @@ export const updateProfile = async (req, res) => {
             resource_type: "auto"
         });
 
-        console.log(cloudinaryResponse);
+        
 
         // Convert comma-separated skills string to an array
         const skillsArray = typeof skills === "string"
