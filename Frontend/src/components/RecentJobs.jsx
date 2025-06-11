@@ -1,9 +1,11 @@
 import React from 'react'
 import RecentJobCards from './RecentJobCards'
+import { useSelector } from 'react-redux'
 
-const randomJobs = [1, 2, 3, 4, 5, 6, 7, 8]
+
 
 const RecentJobs = () => {
+  const {jobList} = useSelector(store=>store.jobs)
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 my-16">
       {/* Heading */}
@@ -13,9 +15,14 @@ const RecentJobs = () => {
 
       {/* Responsive Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {randomJobs.slice(0, 6).map((_, index) => (
-          <RecentJobCards key={index} />
-        ))}
+      {jobList.length <= 0 ? (
+        <span>No opportunities at the moment.</span>
+      ) : (
+        jobList.slice(0, 6).map((job) => (
+          <RecentJobCards key={job._id} job={job} />
+  ))
+)}
+
       </div>
     </section>
   )
