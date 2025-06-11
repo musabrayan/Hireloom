@@ -7,7 +7,8 @@ import { Contact, Mail, Pen } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { Label } from './ui/label';
 import MyJobApplications from './MyJobApplications';
-import updateProfile from './updateProfile';
+import UpdateProfile from './UpdateProfile';
+import { useSelector } from 'react-redux';
 
 const userSkills = ['HTML', 'CSS', 'JavaScript'];
 const userHasResume = true;
@@ -15,6 +16,7 @@ const userHasResume = true;
 const UserProfile = () => {
  
   const [open,setOpen] = useState(false)
+  const {user} = useSelector(store=>store.auth)
 
   return (
     <div>
@@ -31,9 +33,9 @@ const UserProfile = () => {
               />
             </Avatar>
             <div>
-              <h2 className="text-xl font-semibold">Musab</h2>
+              <h2 className="text-xl font-semibold">{user?.fullName}</h2>
               <p className="text-muted-foreground text-sm">
-                Passionate developer with a love for building responsive web apps.
+              {user?.profileDetails.bio}
               </p>
             </div>
           </div>
@@ -46,11 +48,11 @@ const UserProfile = () => {
         <div className="mt-6 space-y-2 text-sm sm:text-base">
           <div className="flex items-center gap-3">
             <Mail className="h-5 w-5 text-muted-foreground" />
-            <span>musab@gmail.com</span>
+            <span>{user.email}</span>
           </div>
           <div className="flex items-center gap-3">
             <Contact className="h-5 w-5 text-muted-foreground" />
-            <span>+91 89933 020XX</span>
+            <span>{user.mobileNumber}</span>
           </div>
         </div>
 
@@ -59,7 +61,7 @@ const UserProfile = () => {
           <h3 className="font-semibold text-lg mb-2">Skills</h3>
           <div className="flex flex-wrap gap-2">
             {userSkills.length > 0 ? (
-              userSkills.map((skill, index) => (
+              user?.profileDetails.skills.map((skill, index) => (
                 <Badge key={index} variant="secondary">
                   {skill}
                 </Badge>
@@ -95,7 +97,7 @@ const UserProfile = () => {
           <h3 className="font-semibold text-lg mb-2">Applied Jobs</h3>
           <MyJobApplications />
         </div>
-        <updateProfile open={open} setOpen={setOpen}/>
+        <UpdateProfile open={open} setOpen={setOpen}/>
         
     </div>
 
