@@ -1,11 +1,13 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken"
+import convertFileToDataUri from "../utils/dataURI.js";
+import cloudinary from "../utils/cloudinary.js";
 export const register = async (req, res) => {
     try {
         const { fullName, email, mobileNumber, password, userRole } = req.body;
         console.log(fullName, email, mobileNumber, password, userRole);
-        
+
         // Check for missing fields
         if (!fullName || !email || !mobileNumber || !password || !userRole) {
             return res.status(400).json({
@@ -157,9 +159,17 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { fullName, email, mobileNumber, bio, skills } = req.body;
-        const file = req.file; // For profile photo or resume (if using multer)
+        const file = req.file;
 
-        // TODO: Cloudinary implementation for uploading file if needed
+        // TODO: Cloudinary implementation for uploading file 
+        const fileURI = convertFileToDataUri(file)
+
+
+        const cloudinaryResponse = await cloudinary.uploader.upload(fileURI.content, {
+            resource_type: "auto"
+        });
+
+        console.log(cloudinaryResponse);
 
         // Convert comma-separated skills string to an array
         const skillsArray = typeof skills === "string"
@@ -187,7 +197,11 @@ export const updateProfile = async (req, res) => {
         if (bio) user.profileDetails.bio = bio;
         if (skills) user.profileDetails.skills = skillsArray;
 
-        // Optionally handle file upload (e.g., profile photo)
+        if (cloudinaryResponse) {
+            user.profileDetails.resumeUrl = cloudinaryResponse.secure_url
+
+            user.profileDetails.resumeFilename = file.originalname
+        }
 
         await user.save();
 

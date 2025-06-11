@@ -10,14 +10,15 @@ import MyJobApplications from './MyJobApplications';
 import UpdateProfile from './UpdateProfile';
 import { useSelector } from 'react-redux';
 
-const userSkills = ['HTML', 'CSS', 'JavaScript'];
-const userHasResume = true;
+
+
 
 const UserProfile = () => {
  
   const [open,setOpen] = useState(false)
   const {user} = useSelector(store=>store.auth)
-
+  const userSkills = user?.profileDetails.skills;
+  const userHasResume = true;
   return (
     <div>
       <Navbar />
@@ -48,11 +49,11 @@ const UserProfile = () => {
         <div className="mt-6 space-y-2 text-sm sm:text-base">
           <div className="flex items-center gap-3">
             <Mail className="h-5 w-5 text-muted-foreground" />
-            <span>{user.email}</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-3">
             <Contact className="h-5 w-5 text-muted-foreground" />
-            <span>{user.mobileNumber}</span>
+            <span>{user?.mobileNumber}</span>
           </div>
         </div>
 
@@ -60,8 +61,8 @@ const UserProfile = () => {
         <div className="mt-6">
           <h3 className="font-semibold text-lg mb-2">Skills</h3>
           <div className="flex flex-wrap gap-2">
-            {userSkills.length > 0 ? (
-              user?.profileDetails.skills.map((skill, index) => (
+            {Array.isArray(userSkills) && userSkills.length > 0 ? (
+             userSkills.map((skill, index) => (
                 <Badge key={index} variant="secondary">
                   {skill}
                 </Badge>
@@ -77,12 +78,12 @@ const UserProfile = () => {
           <Label className="block mb-1">Resume</Label>
           {userHasResume ? (
             <a
-              href="https://drive.google.com/your-resume-link"
+              href={user?.profileDetails.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent hover:underline"
             >
-              View Resume
+             {user?.profileDetails.resumeFilename}
             </a>
           ) : (
             <span className="text-muted-foreground">Not Uploaded</span>
