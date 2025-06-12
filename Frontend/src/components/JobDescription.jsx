@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setJobDetails } from '@/redux/jobSlice';
-import { JOB_API_BASE_URL } from '@/utils/constant';
+import { APPLICATION_API_BASE_URL, JOB_API_BASE_URL } from '@/utils/constant';
+import { toast } from 'sonner';
 
 const JobDescription = () => {
-  const isApplied = false;
   const params = useParams();
   const jobId = params.id;
 
@@ -16,23 +16,62 @@ const JobDescription = () => {
   const { jobDetails } = useSelector((store) => store.jobs);
   const { user } = useSelector((store) => store.auth);
 
+  const hasAlreadyApplied =
+    jobDetails?.applications?.some((application) => application.applicantId === user?._id) || false;
+
+  const [isApplied, setIsApplied] = useState(hasAlreadyApplied);
+
   useEffect(() => {
-    const getJobById = async (jobId) => {
+    const fetchJobDetailsById = async (jobId) => {
       try {
-        const res = await axios.get(`${JOB_API_BASE_URL}/get/${jobId}`, {
+        const response = await axios.get(`${JOB_API_BASE_URL}/get/${jobId}`, {
           withCredentials: true,
         });
 
-        if (res.data.success) {
-          dispatch(setJobDetails(res.data.job));
+        if (response.data.success) {
+          dispatch(setJobDetails(response.data.job));
+          setIsApplied(
+            response.data.job.applications.some(
+              (application) => application.applicantId === user?._id
+            )
+          );
         }
       } catch (error) {
         console.error('Failed to fetch job:', error);
       }
     };
 
-    getJobById(jobId);
+    fetchJobDetailsById(jobId);
   }, [jobId, dispatch, user?._id]);
+
+  const handleJobApplication = async () => {
+    try {
+      const response = await axios.get(
+        `${APPLICATION_API_BASE_URL}/apply/${jobId}`,
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        setIsApplied(true);
+
+        const updatedApplications = [
+          ...jobDetails.applications,
+          { applicantId: user?._id },
+        ];
+
+        const updatedJobDetails = {
+          ...jobDetails,
+          applications: updatedApplications,
+        };
+
+        dispatch(setJobDetails(updatedJobDetails));
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || 'Application failed');
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto mb-10 p-4 sm:px-6 lg:px-8">
@@ -53,14 +92,15 @@ const JobDescription = () => {
         </div>
 
         <Button
-          disabled={isApplied}
-          className={`transition-colors ${
-            isApplied
+          onClick={hasAlreadyApplied ? null : handleJobApplication}
+          disabled={hasAlreadyApplied}
+          className={`transition-colors cursor-pointer ${
+            hasAlreadyApplied
               ? 'bg-accent text-accent-foreground cursor-not-allowed'
               : 'bg-primary text-primary-foreground'
           }`}
         >
-          {isApplied ? 'Already Applied' : 'Apply Now'}
+          {hasAlreadyApplied ? 'Already Applied' : 'Apply Now'}
         </Button>
       </div>
 

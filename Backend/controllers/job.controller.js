@@ -45,7 +45,7 @@ export const createJob = async (req, res) => {
             companyId,
             minExperience: Number(minExperience),
             openPositions: Number(openPositions),
-            createdBy: userId  
+            postedBy: userId  
         });
 
         return res.status(201).json({
@@ -102,7 +102,9 @@ export const getJobs = async (req, res) => {
 export const getJobById = async (req, res) => {
     try {
         const jobId = req.params.id;
-        const job = await Job.findById(jobId).populate("companyId");
+        const job = await Job.findById(jobId).populate({
+            path: "applications"
+        });
 
         if (!job) {
             return res.status(404).json({
