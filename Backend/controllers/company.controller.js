@@ -1,5 +1,6 @@
 import { Company } from "../models/company.model.js";
-
+import convertFileToDataUri from "../utils/dataURI.js";
+import cloudinary from "../utils/cloudinary.js";
 // Register a new company
 export const registerCompany = async (req, res) => {
     try {
@@ -94,9 +95,8 @@ export const getCompanyById = async (req, res) => {
 export const updateCompany = async (req, res) => {
     try {
         const { companyName, companyDescription, websiteUrl, headquarters } = req.body;
-        const file = req.file; // for future use (Cloudinary upload)
+        const file = req.file;
         const companyId = req.params.id;
-
         const company = await Company.findById(companyId);
 
         if (!company) {
@@ -106,7 +106,12 @@ export const updateCompany = async (req, res) => {
             });
         }
 
-        // Optional: Check if the current user is the creator
+         if (req.file) {
+            const fileURI = convertFileToDataUri(req.file);
+            const cloudinaryResponse = await cloudinary.uploader.upload(fileURI.content);
+            company.logoUrl = cloudinaryResponse.secure_url;
+        }
+
         if (company.createdBy.toString() !== req.userId) {
             return res.status(403).json({
                 message: "Unauthorized to update this company.",
@@ -119,8 +124,7 @@ export const updateCompany = async (req, res) => {
         if (companyDescription) company.companyDescription = companyDescription;
         if (websiteUrl) company.websiteUrl = websiteUrl;
         if (headquarters) company.headquarters = headquarters;
-
-        // TODO: Handle logo upload via cloudinary if file exists
+        
 
         await company.save();
 
