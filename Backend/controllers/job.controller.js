@@ -132,7 +132,9 @@ export const JobsCreatedByAdmin = async (req, res) => {
         console.log(req.userId);
         
         const adminId = req.userId;  
-        const jobs = await Job.find({ postedBy: adminId }).populate("companyId").sort({ createdAt: -1 });
+        const jobs = await Job.find({ postedBy: adminId }).populate({
+            path:'companyId'
+        })
 
         if (!jobs || jobs.length === 0) {
             return res.status(404).json({
