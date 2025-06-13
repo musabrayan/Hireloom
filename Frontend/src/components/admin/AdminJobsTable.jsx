@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from '@/components/ui/popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -33,7 +33,7 @@ const AdminJobsTable = () => {
     const filtered = adminJobList.filter((job) =>
       searchJobsByText
         ? job?.jobTitle?.toLowerCase().includes(searchJobsByText.toLowerCase()) ||
-          job?.companyId?.companyName?.toLowerCase().includes(searchJobsByText.toLowerCase()) 
+        job?.companyId?.companyName?.toLowerCase().includes(searchJobsByText.toLowerCase())
         : true
     )
 
@@ -67,25 +67,33 @@ const AdminJobsTable = () => {
             filterJobs?.map((job) => (
               <TableRow key={job._id}>
                 <TableCell className="font-medium">
-                   {job?.companyId?.companyName}
+                  {job?.companyId?.companyName}
                 </TableCell>
                 <TableCell>{job?.jobTitle}</TableCell>
                 <TableCell>{formatDate(job?.createdAt)}</TableCell>
                 <TableCell className="text-right">
-                   <Popover>
-                     <PopoverTrigger className="inline-flex items-center justify-center rounded-md p-1 hover:bg-muted">
-                       <MoreHorizontal className="h-5 w-5 text-muted-foreground" />
-                     </PopoverTrigger>
-                     <PopoverContent className="w-32 bg-popover border border-border shadow-md p-2 rounded-md">
-                       <button
-                         className="flex items-center gap-2 text-sm hover:text-primary transition"
-                         onClick={()=> navigate(`/admin/jobs/${job?._id}`)}
-                       >
-                         <Edit2 className="h-4 w-4" />
-                         <span>Edit</span>
-                       </button>
-                     </PopoverContent>
-                   </Popover>
+                  <Popover>
+                    <PopoverTrigger className="inline-flex items-center justify-center rounded-md p-1 hover:bg-muted">
+                      <MoreHorizontal className="h-5 w-5 text-muted-foreground" />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-40 bg-popover  border border-border shadow-md p-2 rounded-md">
+                      <button
+                        className="flex items-center gap-2 text-sm hover:text-primary transition cursor-pointer mb-2"
+                        onClick={() => navigate(`/admin/jobs/${job?._id}`)}
+                      >
+                        <Edit2 className="h-4 w-4" />
+                        <span>Edit</span>
+                      </button>
+
+                      <button
+                        className="flex items-center gap-2 text-sm hover:text-primary transition whitespace-nowrap cursor-pointer"
+                        onClick={() => navigate(`/admin/jobs/${job?._id}/applicants`)}
+                      >
+                        <Eye className="h-4 w-4" />
+                        <span>View Applicants</span>
+                      </button>
+                    </PopoverContent>
+                  </Popover>
                 </TableCell>
               </TableRow>
             ))

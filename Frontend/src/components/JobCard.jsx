@@ -30,7 +30,7 @@ const JobCard = ({ job }) => {
       {/* Company Info */}
       <div className="flex items-center gap-3 mb-4">
         <Avatar className="w-12 h-12">
-          <AvatarImage src="https://imgs.search.brave.com/hoof-A79UqpE4cGRslutlU9zqOAoCwEI4sfy5cdG--c/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS12ZWN0b3Iv/YWJzdHJhY3QtY29t/cGFueS1sb2dvXzUz/ODc2LTEyMDUwMS5q/cGc_c2VtdD1haXNf/aHlicmlkJnc9NzQw" />
+          <AvatarImage src={job?.companyId?.logoUrl}/>
         </Avatar>
         <div>
           <h2 className="font-semibold text-sm">{job?.companyId?.companyName}</h2>
