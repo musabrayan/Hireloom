@@ -4,8 +4,11 @@ import { useSelector } from 'react-redux'
 
 
 
+
 const RecentJobs = () => {
+  
   const {jobList} = useSelector(store=>store.jobs)
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 my-16">
       {/* Heading */}
@@ -19,7 +22,7 @@ const RecentJobs = () => {
         <span>No opportunities at the moment.</span>
       ) : (
         jobList.slice(0, 6).map((job) => (
-          <RecentJobCards key={job._id} job={job} />
+          <RecentJobCards  key={job._id} job={job} />
   ))
 )}
 

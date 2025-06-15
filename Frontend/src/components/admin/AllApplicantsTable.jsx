@@ -8,7 +8,7 @@ import axios from 'axios'
 import { APPLICATION_API_BASE_URL } from '@/utils/constant'
 import { toast } from 'sonner'
 
-const ACTION_STATUSES = ['selected', 'rejected']
+const ACTION_STATUSES = ['accepted', 'rejected']
 
 const AllApplicantsTable = () => {
     const { applicants } = useSelector((store) => store.application)

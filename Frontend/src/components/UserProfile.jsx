@@ -9,6 +9,7 @@ import { Label } from './ui/label';
 import MyJobApplications from './MyJobApplications';
 import UpdateProfile from './UpdateProfile';
 import { useSelector } from 'react-redux';
+import useUserAppliedJobs from '@/hooks/useUserAppliedJobs ';
 
 
 
@@ -19,6 +20,8 @@ const UserProfile = () => {
   const {user} = useSelector(store=>store.auth)
   const userSkills = user?.profileDetails.skills;
   const userHasResume = true;
+  useUserAppliedJobs()
+
   return (
     <div>
       <Navbar />

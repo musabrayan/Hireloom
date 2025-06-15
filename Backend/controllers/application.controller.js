@@ -139,6 +139,7 @@ export const getJobApplicants = async (req, res) => {
 export const updateApplicationStatus = async (req, res) => {
     try {
         const { applicationStatus } = req.body;
+        console.log(applicationStatus);
         
         
         const applicationId = req.params.id;

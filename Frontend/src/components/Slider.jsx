@@ -1,6 +1,9 @@
 import React from 'react'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
 import { Button } from './ui/button'
+import { setSearchedJob } from '@/redux/jobSlice'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 const category = [
     "Frontend Developer",
@@ -11,6 +14,13 @@ const category = [
 ]
 
 const Slider = () => {
+    const dispatch = useDispatch()
+     const navigate = useNavigate();
+
+     const handleSearchClick = (input)=>{
+             dispatch(setSearchedJob(input))
+             navigate("/browse")
+      }
     return (
         <div className="w-full py-8 md:py-12 lg:py-16">
       
@@ -31,6 +41,8 @@ const Slider = () => {
                             <Button
                                 variant="outline"
                                 className="w-full h-12 md:h-14 lg:h-16 cursor-pointer hover:bg-primary/10 hover:text-primary hover:border-primary/50 transition-all duration-200"
+
+                                onClick={()=>handleSearchClick(cat)}
                             >
                                 {cat}
                             </Button>
