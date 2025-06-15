@@ -13,7 +13,7 @@ const useUserAppliedJobs  = () => {
     const fetchUserAppliedJobs = async ()=>{
         try {
             const res = await axios.get(`${APPLICATION_API_BASE_URL}/get`, {withCredentials:true})
-            console.log(res.data);
+           
             
 
             if(res.data.success){

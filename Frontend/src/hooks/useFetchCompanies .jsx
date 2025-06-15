@@ -14,7 +14,7 @@ const useFetchCompanies   = () => {
                 const res = await axios.get(`${COMPANY_API_BASE_URL}/get`, { withCredentials: true });
 
                 if (res.data.success) {
-                    console.log("Companies fetched:", res.data.companies); 
+             
                     dispatch(setAllCompanies(res.data.companies
 )); 
                 }

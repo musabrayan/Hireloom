@@ -15,7 +15,6 @@ const useCompanyById  = (companyId) => {
         });
 
         if (res.data.success) {
-          console.log("Company fetched:", res.data.company);
           dispatch(setSingleCompany(res.data.company));
         }
       } catch (error) {

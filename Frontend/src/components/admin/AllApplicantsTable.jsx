@@ -14,7 +14,6 @@ const AllApplicantsTable = () => {
     const { applicants } = useSelector((store) => store.application)
 
     const handleStatusChange = async (newStatus, applicationId) => {
-        console.log(newStatus);
         
         try {
             const res = await axios.post(
