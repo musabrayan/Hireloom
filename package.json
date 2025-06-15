@@ -7,8 +7,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon Backend/index.js",
+    "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend",
+    "start": "nodemon Backend/index.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
