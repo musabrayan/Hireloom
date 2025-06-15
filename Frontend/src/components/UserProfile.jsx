@@ -9,7 +9,7 @@ import { Label } from './ui/label';
 import MyJobApplications from './MyJobApplications';
 import { useSelector } from 'react-redux';
 import useUserAppliedJobs from '@/hooks/useUserAppliedJobs';
-// import UpdateProfile from './UpdateProfile';
+import UpdateProfile from './UpdateProfile';
 
 
 
@@ -100,7 +100,7 @@ const UserProfile = () => {
           <h3 className="font-semibold text-lg mb-2">Applied Jobs</h3>
           <MyJobApplications />
         </div>
-        {/* <UpdateProfile open={open} setOpen={setOpen}/> */}
+        <UpdateProfile open={open} setOpen={setOpen}/>
         
     </div>
 
