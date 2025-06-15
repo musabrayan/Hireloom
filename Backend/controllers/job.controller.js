@@ -129,8 +129,6 @@ export const getJobById = async (req, res) => {
 
 export const JobsCreatedByAdmin = async (req, res) => {
     try {
-        console.log(req.userId);
-        
         const adminId = req.userId;  
         const jobs = await Job.find({ postedBy: adminId }).populate({
             path:'companyId'
@@ -157,3 +155,47 @@ export const JobsCreatedByAdmin = async (req, res) => {
         });
     }
 };
+
+export const updateJob = async (req, res) => {
+    try {
+        const jobId = req.params.id;
+        const {
+            jobTitle,
+            jobDescription,
+            jobRequirements,
+            salary,
+            jobLocation,
+            employmentType,
+            companyId,
+            openPositions,
+            minExperience
+        } = req.body;
+
+        // Find job first
+        const job = await Job.findById(jobId);
+        if (!job) {
+            return res.status(404).json({ success: false, message: "Job not found." });
+        }
+        
+        // Update fields if provided
+        if (jobTitle) job.jobTitle = jobTitle;
+        if (jobDescription) job.jobDescription = jobDescription;
+        if (jobRequirements) job.jobRequirements = jobRequirements.split(",").map(req => req.trim()); 
+        if (salary) job.salary = Number(salary);
+        if (jobLocation) job.jobLocation = jobLocation;
+        if (employmentType) job.employmentType = employmentType;
+        if (companyId) job.companyId = companyId;
+        if (openPositions) job.openPositions = Number(openPositions);
+        if (minExperience) job.minExperience = Number(minExperience);
+
+        await job.save();
+
+        res.status(200).json({ success: true, message: "Job updated successfully.", job });
+
+    } catch (error) {
+        console.error("Error updating job:", error?.message);
+        res.status(500).json({ success: false, message: "Internal server error.", error: error?.message });
+    }
+};
+
+

@@ -85,7 +85,7 @@ useEffect(() => {
                     </PopoverTrigger>
                     <PopoverContent className="w-32 bg-popover border border-border shadow-md p-2 rounded-md">
                       <button className="flex items-center gap-2 text-sm hover:text-primary transition"
-                      onClick={()=> navigate(`/admin/companies/${company?._id}`)}
+                      onClick={()=> navigate(`/admin/companies/edit/${company?._id}`)}
                       >
                         <Edit2 className="h-4 w-4" />
                         <span>Edit</span>
