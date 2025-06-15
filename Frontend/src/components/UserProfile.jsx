@@ -7,7 +7,7 @@ import { Contact, Mail, Pen } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { Label } from './ui/label';
 import MyJobApplications from './MyJobApplications';
-import UpdateProfile from './UpdateProfile';
+import UpdateProfile from '@/components/UpdateProfile';
 import { useSelector } from 'react-redux';
 import useUserAppliedJobs from '@/hooks/useUserAppliedJobs';
 
