@@ -47,7 +47,7 @@ const FilterCards = ({ filters, setFilters }) => {
 
   return (
     <div className="w-full bg-card text-card-foreground p-4 rounded-2xl shadow border border-border">
-      {/* Header */}
+    
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold">Filter Jobs</h2>
         <button
@@ -95,10 +95,10 @@ const FilterCards = ({ filters, setFilters }) => {
           </div>
         ))}
 
-        {/* Clear Filters Button */}
+       
         <button
           onClick={() => setFilters({ title: '', location: '', salaryRange: [] })}
-          className="text-sm text-blue-600 hover:underline mt-2"
+          className="text-sm text-accent hover:underline mt-2 cursor-pointer"
         >
           Clear Filters
         </button>
