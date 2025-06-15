@@ -9,7 +9,7 @@ import { Label } from './ui/label';
 import MyJobApplications from './MyJobApplications';
 import UpdateProfile from './UpdateProfile';
 import { useSelector } from 'react-redux';
-import useUserAppliedJobs from '@/hooks/useUserAppliedJobs ';
+import useUserAppliedJobs from '@/hooks/useUserAppliedJobs';
 
 
 
