@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -33,7 +33,7 @@ const Signup = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.auth);
+  const { loading, user} = useSelector((state) => state.auth);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -66,6 +66,13 @@ const Signup = () => {
       dispatch(setLoading(false));
     }
   };
+
+   useEffect(() => {
+      if (user) {
+        navigate("/")
+      }
+  
+    }, [])
 
   return (
     <div className="min-h-screen bg-background text-foreground">

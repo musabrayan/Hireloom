@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Navbar from "./components/global/Navbar"
 import Login from "./components/auth/Login"
 import Signup from "./components/auth/Signup"
 import Home from "./components/Home"
@@ -14,6 +13,7 @@ import AdminJobs from "./components/admin/AdminJobs"
 import JobPostForm from "./components/admin/JobPostForm"
 import JobApplicants from "./components/admin/JobApplicants"
 import EditJob from "./components/admin/EditJob"
+import ProtectedRoute from "./components/admin/ProtectedRoute"
 
 const appRouter = createBrowserRouter([
   {
@@ -47,35 +47,20 @@ const appRouter = createBrowserRouter([
 
   // Admin Routes
 
-  {
-    path:"/admin/companies",
-    element:<Companies/>
-  },
+ {
+  path: "/admin",
+  element: <ProtectedRoute />, 
+  children: [
+    { path: "companies", element: <Companies /> },
+    { path: "companies/create", element: <CreateCompany /> },
+    { path: "companies/edit/:id", element: <CompanySetup /> },
+    { path: "jobs", element: <AdminJobs /> },
+    { path: "jobs/create", element: <JobPostForm /> },
+    { path: "jobs/edit/:id", element: <EditJob /> },
+    { path: "jobs/:id/applicants", element: <JobApplicants /> }
+  ]
+}
 
-  {
-    path:"/admin/companies/create",
-    element:<CreateCompany/>
-  },
-  {
-    path:"/admin/companies/edit/:id",
-    element:<CompanySetup/>
-  },
-  {
-    path:"/admin/jobs",
-    element:<AdminJobs/>
-  },
-  {
-    path:"/admin/jobs/create",
-    element:<JobPostForm/>
-  },
-  {
-    path:"/admin/jobs/edit/:id",
-    element:<EditJob/>
-  },
-  {
-    path:"/admin/jobs/:id/applicants",
-    element:<JobApplicants/>
-  }
 
 
 ])

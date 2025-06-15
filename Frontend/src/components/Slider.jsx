@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 const category = [
-    "Frontend Developer",
+    "Software Developer",
     "Backend Developer", 
     "Data Science",
     "Graphic Designer",
