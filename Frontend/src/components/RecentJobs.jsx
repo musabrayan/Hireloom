@@ -44,12 +44,12 @@ const RecentJobs = () => {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         variants={containerVariants}
       >
-        {jobList.length <= 0 ? (
+        {jobList?.length <= 0 ? (
           <motion.span variants={itemVariants}>
             No opportunities at the moment.
           </motion.span>
         ) : (
-          jobList.slice(0, 6).map((job) => (
+          jobList?.slice(0, 6).map((job) => (
             <motion.div
               key={job._id}
               variants={itemVariants}
