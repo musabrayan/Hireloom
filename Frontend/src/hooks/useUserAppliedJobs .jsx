@@ -13,8 +13,6 @@ const useUserAppliedJobs  = () => {
     const fetchUserAppliedJobs = async ()=>{
         try {
             const res = await axios.get(`${APPLICATION_API_BASE_URL}/get`, {withCredentials:true})
-           
-            
 
             if(res.data.success){
                 dispatch(setAllUserAppliedJobs(res.data.applications))
