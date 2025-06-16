@@ -31,7 +31,7 @@ const JobApplicants = () => {
 
       <div className='max-w-6xl mx-auto p-6'>
         <h1 className='text-3xl font-semibold mb-6'>
-          All Applicants ({applicants.applications.length})
+          All Applicants ({applicants?.applications?.length})
         </h1>
 
         <div className='p-4 rounded-lg shadow-md'>
