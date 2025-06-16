@@ -25,3 +25,9 @@ With Hireloom, recruiters can post job openings, view applications, and manage t
 - **Other:** Cloud storage for resumes, search and filter
 
 ---
+## 🔹 Database Diagram
+
+![image](https://github.com/user-attachments/assets/09a31ad5-7f71-4ee6-ac9d-926619428eb8)
+
+
+---
