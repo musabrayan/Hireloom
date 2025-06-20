@@ -22,7 +22,6 @@ const itemVariants = {
 
 const RecentJobs = () => {
   const { jobList } = useSelector(store => store.jobs)
-  console.log(jobList);
   
   return (
     <motion.section

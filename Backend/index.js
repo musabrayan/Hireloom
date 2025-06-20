@@ -36,7 +36,5 @@ app.get(/.*/, (req, res) => {
     res.sendFile(path.resolve(__dirname, "Frontend", "dist", "index.html"));
 });
 app.listen(PORT, ()=>{
-    console.log("server started");
-    
     connectDB();
 })
