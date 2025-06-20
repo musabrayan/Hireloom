@@ -14,10 +14,10 @@ import { useDispatch } from 'react-redux'
 
 const category = [
   "Software Developer",
-  "Backend Developer",
-  "Data Science",
+  "Fullstack Developer",
+  "AI Engineer",
+  "Cloud Architect",
   "Graphic Designer",
-  "Fullstack Developer"
 ]
 
 const Slider = () => {
