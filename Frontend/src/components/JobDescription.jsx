@@ -24,12 +24,10 @@ const JobDescription = () => {
   useEffect(() => {
     const fetchJobDetailsById = async (jobId) => {
       try {
-        const response = await axios.get(`${JOB_API_BASE_URL}/get/${jobId}`, {
-          withCredentials: true,
-        });
+        const response = await axios.get(`${JOB_API_BASE_URL}/get/${jobId}`);
 
         if (response.data.success) {
-          dispatch(setJobDetails(response.data.job));
+          dispatch(setJobDetails(response?.data?.job));
           setIsApplied(
             response.data.job.applications.some(
               (application) => application.applicantId === user?._id
