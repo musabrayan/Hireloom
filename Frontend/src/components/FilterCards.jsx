@@ -7,7 +7,7 @@ const filterData = [
   {
     filterType: "location",
     title: "IT Cities",
-    array: ["Bangalore", "Hyderabad", "Pune", "Chennai", "Delhi", "Noida"]
+    array: ["Bangalore", "Hyderabad", "Mumbai", "Chennai", "Delhi", "Noida"]
   },
   {
     filterType: "title",
@@ -17,8 +17,8 @@ const filterData = [
       "Software Developer",
       "Senior Software Engineer",
       "Tech Lead",
-      "Engineering Manager",
-      "QA Engineer",
+      "Cloud Engineer",
+      "AI Engineer",
       "DevOps Engineer"
     ]
   },
