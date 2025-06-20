@@ -7,7 +7,7 @@ const filterData = [
   {
     filterType: "location",
     title: "IT Cities",
-    array: ["Bangalore", "Hyderabad", "Pune", "Chennai", "Gurgaon", "Noida"]
+    array: ["Bangalore", "Hyderabad", "Pune", "Chennai", "Delhi", "Noida"]
   },
   {
     filterType: "title",

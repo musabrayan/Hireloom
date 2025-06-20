@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import useCompanyById from '@/hooks/useCompanyById '
+import useCompanyById from '@/hooks/useCompanyById'
 
 const CompanySetup = () => {
   const params = useParams()

@@ -28,7 +28,7 @@ const CreateCompany = () => {
 
                 toast.success(res.data.message)
                 dispatch(setSingleCompany(res.data.company))
-                const companyId = res?.data?.company?._id
+                const companyId = res?.data?.company?._id 
                 navigate(`/admin/companies/edit/${companyId}`)
 
             }
@@ -44,7 +44,7 @@ const CreateCompany = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-
+      
       <div className="max-w-xl mx-auto px-4 py-12">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold mb-2">Your Company Name</h1>
