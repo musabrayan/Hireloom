@@ -18,6 +18,8 @@ const category = [
   "AI Engineer",
   "Cloud Architect",
   "Graphic Designer",
+  "Cloud Engineer",
+  "DevOps Engineer"
 ]
 
 const Slider = () => {
