@@ -1,6 +1,7 @@
 import { Company } from "../models/company.model.js";
 import convertFileToDataUri from "../utils/dataURI.js";
 import cloudinary from "../utils/cloudinary.js";
+
 // Register a new company
 export const registerCompany = async (req, res) => {
     try {

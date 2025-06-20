@@ -4,8 +4,8 @@ import { Job } from "../models/job.model.js";
 // Controller to handle job application by a user
 export const applyToJob = async (req, res) => {
     try {
-        const applicantId = req.userId; // Extract user ID from authenticated request
-        const jobId = req.params.id; // Get job ID from route parameter
+        const applicantId = req.userId; 
+        const jobId = req.params.id; 
 
         if (!jobId) {
             return res.status(400).json({

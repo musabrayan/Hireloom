@@ -14,7 +14,7 @@ export const createJob = async (req, res) => {
             minExperience
         } = req.body;
 
-        const userId = req.userId; // from auth middleware
+        const userId = req.userId; 
 
         // Validate all required fields
         if (
@@ -134,7 +134,7 @@ export const JobsCreatedByAdmin = async (req, res) => {
             path:'companyId'
         })
 
-        if (!jobs || jobs.length === 0) {
+        if (!jobs || jobs?.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "No jobs found for this user."

@@ -31,7 +31,7 @@ const RecentJobs = () => {
       viewport={{ once: false, amount: 0.3 }}
       variants={containerVariants}
     >
-      {/* Heading */}
+      
       <motion.h2
         className="text-3xl sm:text-4xl font-bold text-foreground mb-6 text-center sm:text-left"
         variants={itemVariants}
@@ -39,7 +39,7 @@ const RecentJobs = () => {
         <span className="text-primary">Latest & Top</span> Job Openings
       </motion.h2>
 
-      {/* Responsive Grid */}
+
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         variants={containerVariants}
@@ -51,7 +51,7 @@ const RecentJobs = () => {
         ) : (
           jobList?.slice(0, 6).map((job) => (
             <motion.div
-              key={job._id}
+              key={job?._id}
               variants={itemVariants}
               whileHover={{ scale: 1.03, y: -5 }}
               whileTap={{ scale: 0.97 }}

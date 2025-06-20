@@ -171,7 +171,7 @@ export const updateProfile = async (req, res) => {
         const { fullName, email, mobileNumber, bio, skills } = req.body;
         const file = req.file;
 
-        // TODO: Cloudinary implementation for uploading file 
+       
         const fileURI = convertFileToDataUri(file)
 
 
@@ -186,7 +186,7 @@ export const updateProfile = async (req, res) => {
             ? skills.split(",").map(skill => skill.trim())
             : skills;
 
-        const userId = req.userId; // Comes from isAuthenticated middleware
+        const userId = req.userId; 
 
         const user = await User.findById(userId);
         if (!user) {
