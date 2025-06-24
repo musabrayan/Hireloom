@@ -48,15 +48,15 @@ const Navbar = () => {
 
 
     return (
-        <motion.div 
+        <motion.div
             className="bg-background border-b border-border"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
             <div className="flex items-center justify-between mx-auto max-w-7xl h-14 sm:h-16 px-3 sm:px-4 md:px-6 lg:px-8">
-                <Link to="/" className="cursor-pointer">  
-                    <motion.h1 
+                <Link to="/" className="cursor-pointer">
+                    <motion.h1
                         className="text-lg sm:text-xl md:text-2xl font-bold text-foreground"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.2 }}
@@ -83,7 +83,7 @@ const Navbar = () => {
 
 
 
-                    <motion.ul 
+                    <motion.ul
                         className="hidden sm:flex items-center gap-3 sm:gap-4 md:gap-6 text-muted-foreground font-medium"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -93,7 +93,7 @@ const Navbar = () => {
                         {
                             user && user.userRole === 'recruiter' ? (
                                 <>
-                                    <motion.li 
+                                    <motion.li
                                         className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"
                                         whileHover={{ scale: 1.05 }}
                                         transition={{ duration: 0.2 }}
@@ -102,7 +102,7 @@ const Navbar = () => {
                                             Companies
                                         </Link>
                                     </motion.li>
-                                    <motion.li 
+                                    <motion.li
                                         className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"
                                         whileHover={{ scale: 1.05 }}
                                         transition={{ duration: 0.2 }}
@@ -114,7 +114,7 @@ const Navbar = () => {
                                 </>
                             ) : (
                                 <>
-                                    <motion.li 
+                                    <motion.li
                                         className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"
                                         whileHover={{ scale: 1.05 }}
                                         transition={{ duration: 0.2 }}
@@ -123,7 +123,7 @@ const Navbar = () => {
                                             Home
                                         </Link>
                                     </motion.li>
-                                    <motion.li 
+                                    <motion.li
                                         className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"
                                         whileHover={{ scale: 1.05 }}
                                         transition={{ duration: 0.2 }}
@@ -132,13 +132,22 @@ const Navbar = () => {
                                             Jobs
                                         </Link>
                                     </motion.li>
-                                    <motion.li 
+                                    <motion.li
                                         className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"
                                         whileHover={{ scale: 1.05 }}
                                         transition={{ duration: 0.2 }}
                                     >
                                         <Link to="/browse">
                                             Browse
+                                        </Link>
+                                    </motion.li>
+                                    <motion.li
+                                        className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"
+                                        whileHover={{ scale: 1.05 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <Link to="/roadmap">
+                                           AI-Roadmap
                                         </Link>
                                     </motion.li>
 
@@ -150,7 +159,7 @@ const Navbar = () => {
                     </motion.ul>
 
                     {!user ? (
-                        <motion.div 
+                        <motion.div
                             className="flex items-center gap-1.5 sm:gap-2"
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -205,7 +214,7 @@ const Navbar = () => {
 
                                 <PopoverContent className="w-56 sm:w-64 p-3 sm:p-4 space-y-3 sm:space-y-4 bg-popover text-popover-foreground border border-border shadow-md">
 
-                                    <motion.div 
+                                    <motion.div
                                         className="flex items-center gap-2 sm:gap-3"
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
@@ -224,13 +233,13 @@ const Navbar = () => {
                                     </motion.div>
 
 
-                                    <motion.div 
+                                    <motion.div
                                         className="border-t border-border pt-2 space-y-1"
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.3, delay: 0.1 }}
                                     >
-                                         {user && user.userRole === 'student' && (
+                                        {user && user.userRole === 'student' && (
                                             <motion.div
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
@@ -240,12 +249,12 @@ const Navbar = () => {
                                                     size="sm"
                                                     className="w-full justify-start gap-2 hover:bg-muted transition-colors text-xs sm:text-sm h-8 sm:h-9 cursor-pointer"
                                                 >
-                                                   
+
                                                     <User2 size={14} className="sm:w-4 sm:h-4" /> <Link to='/user-profile'> View Profile</Link>
                                                 </Button>
                                             </motion.div>
-                                         )}
-                                        
+                                        )}
+
                                         <motion.div
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
@@ -270,14 +279,14 @@ const Navbar = () => {
 
             <AnimatePresence>
                 {isMobileMenuOpen && (
-                    <motion.div 
+                    <motion.div
                         className="sm:hidden bg-background border-t border-border"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <motion.div 
+                        <motion.div
                             className="px-3 py-4 space-y-3"
                             initial={{ y: -20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
@@ -299,7 +308,7 @@ const Navbar = () => {
                                                     className="block hover:text-primary transition-colors text-base py-2"
                                                     onClick={() => setIsMobileMenuOpen(false)}
                                                 >
-                                                    Home
+                                                    Companies
                                                 </Link>
                                             </motion.li>
                                             <motion.li
@@ -362,6 +371,20 @@ const Navbar = () => {
                                                     Browse
                                                 </Link>
                                             </motion.li>
+                                            <motion.li
+                                                initial={{ x: -20, opacity: 0 }}
+                                                animate={{ x: 0, opacity: 1 }}
+                                                transition={{ duration: 0.3, delay: 0.4 }}
+                                                whileHover={{ x: 5 }}
+                                            >
+                                                <Link
+                                                    to="/roadmap"
+                                                    className="block hover:text-primary transition-colors text-base py-2"
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                >
+                                                    AI-Roadmap
+                                                </Link>
+                                            </motion.li>
                                         </>
                                     )
                                 }
@@ -371,7 +394,7 @@ const Navbar = () => {
 
 
                             {!user && (
-                                <motion.div 
+                                <motion.div
                                     className="flex flex-col gap-3 pt-3 border-t border-border"
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}

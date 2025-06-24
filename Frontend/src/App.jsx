@@ -14,6 +14,7 @@ import JobPostForm from "./components/admin/JobPostForm"
 import JobApplicants from "./components/admin/JobApplicants"
 import EditJob from "./components/admin/EditJob"
 import ProtectedRoute from "./components/admin/ProtectedRoute"
+import Roadmap from "./components/Roadmap"
 
 const appRouter = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/browse",
     element: <BrowseJobs/>
+  },
+  {
+    path: "/roadmap",
+    element: <Roadmap/>
   },
   {
     path: "/user-profile",
