@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Flow from "./FlowChart";
 import { Label } from "./ui/label";
 import {
@@ -8,11 +9,13 @@ import {
   SelectValue,
 } from "./ui/select";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Roadmap() {
   const [selectedDomain, setSelectedDomain] = useState("");
   const [showFlow, setShowFlow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const {user} = useSelector(store=>store.auth)
 
   const domains = [
     "Web Development",
@@ -28,6 +31,10 @@ export default function Roadmap() {
   ];
 
   const handleGenerateRoadmap = async () => {
+    if (!user) {
+      toast.error("You must be logged in to generate a roadmap.");
+      return; 
+    }
     if (!selectedDomain) {
       alert("Please select a domain first!");
       return;
