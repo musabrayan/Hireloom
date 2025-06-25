@@ -150,6 +150,15 @@ const Navbar = () => {
                                            AI-Roadmap
                                         </Link>
                                     </motion.li>
+                                    <motion.li
+                                        className="hover:text-primary cursor-pointer transition-colors text-sm md:text-base"
+                                        whileHover={{ scale: 1.05 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <Link to="/resume-analysis">
+                                           AI-Resume-Analyzer
+                                        </Link>
+                                    </motion.li>
 
                                 </>
 
@@ -383,6 +392,20 @@ const Navbar = () => {
                                                     onClick={() => setIsMobileMenuOpen(false)}
                                                 >
                                                     AI-Roadmap
+                                                </Link>
+                                            </motion.li>
+                                            <motion.li
+                                                initial={{ x: -20, opacity: 0 }}
+                                                animate={{ x: 0, opacity: 1 }}
+                                                transition={{ duration: 0.3, delay: 0.4 }}
+                                                whileHover={{ x: 5 }}
+                                            >
+                                                <Link
+                                                    to="/resume-analysis"
+                                                    className="block hover:text-primary transition-colors text-base py-2"
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                >
+                                                    AI-Resume-Analyzer
                                                 </Link>
                                             </motion.li>
                                         </>

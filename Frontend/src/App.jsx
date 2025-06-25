@@ -15,6 +15,7 @@ import JobApplicants from "./components/admin/JobApplicants"
 import EditJob from "./components/admin/EditJob"
 import ProtectedRoute from "./components/admin/ProtectedRoute"
 import Roadmap from "./components/Roadmap"
+import ResumeAnalyzer from "./components/ResumeAnalyzer"
 
 const appRouter = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/roadmap",
     element: <Roadmap/>
+  },
+  {
+    path: "/resume-analysis",
+    element: <ResumeAnalyzer/>
   },
   {
     path: "/user-profile",
