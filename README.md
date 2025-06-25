@@ -1,9 +1,9 @@
 # Hireloom
 
-Hireloom is a **Job Portal Application** designed to connect **job seekers** and **recruiters** on a unified platform.  
+**Hireloom** is a **Job Portal Application** designed to connect **job seekers** and **recruiters** on a unified platform.  
 With Hireloom, recruiters can post job openings, view applications, and manage their hiring process efficiently — while job seekers can search for jobs, apply directly, track application statuses, and showcase their profiles.
 
----
+
 
 ## 🔹 Features
 
@@ -12,9 +12,11 @@ With Hireloom, recruiters can post job openings, view applications, and manage t
 - **Job Posting:** Recruiters can create and manage job posts.
 - **Application Dashboard:** Job seekers can track their applications’ statuses.
 - **Profile:** Both recruiters and job seekers can view and edit their profiles.
+- **AI Career Roadmap Generator:** Get a personalized career growth roadmap based on your selected domain using Gemini API and React Flow.
+- **AI Resume Relevance Analyzer:** Analyze your resume against a job description to get relevance score, keyword matches, and improvement suggestions.
 - **Responsive UI:** Built with a modern stack for a smooth experience across all devices.
 
----
+
 
 ## 🔹 Tech Stack
 
@@ -22,9 +24,12 @@ With Hireloom, recruiters can post job openings, view applications, and manage t
 - **Back-end:** Node.js, Express
 - **Database:** MongoDB
 - **API:** REST API with JWT authentication
-- **Other:** Cloud storage for resumes, search and filter
+- **Other:** 
+  - Cloud storage for resumes  
+  - Search and filter functionality  
+  - AI integrations with Gemini API
 
----
+
 ## 🔹 Database Diagram
 
 ![image](https://github.com/user-attachments/assets/09a31ad5-7f71-4ee6-ac9d-926619428eb8)
