@@ -59,7 +59,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Tired of endless scrolling? Discover curated job openings tailored to your skills and experience. Apply with ease and track your applications in one place.
+         Tired of endless scrolling? Explore curated job openings, generate your AI-powered career roadmap, and get smart resume analysis — all in one place.
         </motion.p>
       </div>
       
