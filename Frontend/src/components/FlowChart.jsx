@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import {
   ReactFlow,
   useNodesState,
@@ -10,6 +10,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { ArrowLeft, BookOpen, Clock, TrendingUp } from 'lucide-react';
+import { GoogleGenAI } from "@google/genai";
 
 const FlowChart = ({ domain, onBack }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -17,6 +18,10 @@ const FlowChart = ({ domain, onBack }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Prevent duplicate API calls and cache data
+  const hasFetched = useRef(false);
+  const cachedData = useRef(null);
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
@@ -29,6 +34,8 @@ const FlowChart = ({ domain, onBack }) => {
 
   const generateRoadmapFromGemini = async (selectedDomain) => {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    
+    const ai = new GoogleGenAI({ apiKey });
 
     const prompt = `Create a detailed 8-week learning roadmap for ${selectedDomain}. Return only JSON with structure:
     {
@@ -45,22 +52,22 @@ const FlowChart = ({ domain, onBack }) => {
       ]
     }`;
 
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
 
-    const data = await res.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('Invalid response from Gemini');
-    return JSON.parse(jsonMatch[0]);
+      const text = response.text || '';
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('Invalid response from Gemini');
+      return JSON.parse(jsonMatch[0]);
+    } catch (err) {
+      if (err.message?.includes('429') || err.status === 429) {
+        throw new Error('API rate limit exceeded. Please wait a minute and try again.');
+      }
+      throw err;
+    }
   };
 
   const convertToReactFlowFormat = (roadmapData) => {
@@ -179,24 +186,41 @@ const FlowChart = ({ domain, onBack }) => {
     return { nodes: flowNodes, edges: flowEdges };
   };
 
+  // Update nodes when isMobile changes (without re-fetching)
+  useEffect(() => {
+    if (cachedData.current) {
+      const { nodes, edges } = convertToReactFlowFormat(cachedData.current);
+      setNodes(nodes);
+      setEdges(edges);
+    }
+  }, [isMobile]);
 
-
+  // Fetch data only once
   useEffect(() => {
     const loadRoadmap = async () => {
+      // Prevent duplicate API calls
+      if (hasFetched.current) return;
+      hasFetched.current = true;
+
       setIsLoading(true);
+      setError(null);
+
       try {
         const data = await generateRoadmapFromGemini(domain);
+        cachedData.current = data; // Cache the response
         const { nodes, edges } = convertToReactFlowFormat(data);
         setNodes(nodes);
         setEdges(edges);
       } catch (err) {
         setError(err.message || 'Failed to load roadmap.');
+        hasFetched.current = false; // Allow retry on error
       } finally {
         setIsLoading(false);
       }
     };
+
     if (domain) loadRoadmap();
-  }, [domain, isMobile]);
+  }, [domain]); // Removed isMobile from dependencies
 
   if (isLoading) {
     return (
@@ -206,7 +230,6 @@ const FlowChart = ({ domain, onBack }) => {
           Generating roadmap for <span className="capitalize">{domain}</span>...
         </p>
       </div>
-
     );
   }
 
