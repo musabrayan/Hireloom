@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));  
 app.use(cookieParser());                
 const corsOptions = {
-    origin:'https://hireloom.onrender.com',
+    origin:['https://hireloom.onrender.com', 'http://localhost:8000', 'http://localhost'],
     credentials:true
 }
 app.use(cors(corsOptions));
