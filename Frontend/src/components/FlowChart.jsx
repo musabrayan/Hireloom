@@ -10,7 +10,8 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { ArrowLeft, BookOpen, Clock, TrendingUp } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
+import axios from 'axios';
+import { GEMINI_API_BASE_URL } from '../utils/constant';
 
 const FlowChart = ({ domain, onBack }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -33,40 +34,21 @@ const FlowChart = ({ domain, onBack }) => {
   }, []);
 
   const generateRoadmapFromGemini = async (selectedDomain) => {
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    
-    const ai = new GoogleGenAI({ apiKey });
-
-    const prompt = `Create a detailed 8-week learning roadmap for ${selectedDomain}. Return only JSON with structure:
-    {
-      "domain": "${selectedDomain}",
-      "weeks": [
-        {
-          "week": 1,
-          "title": "Week 1 Title",
-          "topics": ["Topic 1", "Topic 2"],
-          "description": "Summary",
-          "estimatedHours": "10-15 hours",
-          "level": "beginner"
-        }
-      ]
-    }`;
-
     try {
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-      });
+      const response = await axios.post(
+        `${GEMINI_API_BASE_URL}/roadmap`,
+        { domain: selectedDomain },
+        { withCredentials: true }
+      );
 
-      const text = response.text || '';
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) throw new Error('Invalid response from Gemini');
-      return JSON.parse(jsonMatch[0]);
-    } catch (err) {
-      if (err.message?.includes('429') || err.status === 429) {
-        throw new Error('API rate limit exceeded. Please wait a minute and try again.');
+      if (!response?.data?.success || !response?.data?.roadmap) {
+        throw new Error(response?.data?.message || 'Failed to load roadmap.');
       }
-      throw err;
+
+      return response.data.roadmap;
+    } catch (err) {
+      const message = err?.response?.data?.message || err.message || 'Failed to load roadmap.';
+      throw new Error(message);
     }
   };
 
